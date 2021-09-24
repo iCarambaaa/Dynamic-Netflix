@@ -90,22 +90,24 @@
  <form onsubmit="sendMovie(event)">
    <div class="form-group">
      <label for="name">Name</label>
-     <input type="text" class="form-control" id="name">
+     <input type="text" class="form-control" id="name" required>
    </div>
    <div class="form-group">
      <label for="description">Description</label>
-     <input type="textarea" class="form-control" id="description">
+     <input type="textarea" class="form-control" id="description" required>
    </div>
    <div class="form-group">
      <label for="imageUrl">Image URL</label>
-     <input type="text" class="form-control" id="imageUrl">
+     <input type="text" class="form-control" id="imageUrl" required>
    </div>
    <div class="form-group">
      <label for="category">Genre</label>
-     <input type="text" class="form-control" id="category">
+     <input type="text" class="form-control" id="category" required>
    </div>
-   <button type="submit" class="btn btn-primary">Submit</button>
+   <button id="submit" type="submit" class="btn btn-primary">Submit</button>
    <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear</button>
+   <button type="button" class="btn btn-danger d-none" onclick="deleteMovie()">Delete</button>
+
  </form>
 </div>
 
@@ -116,7 +118,24 @@
 
  
 <script>
-   function sendMovie(event){
+
+
+// URLSEARCHPARAMS
+
+const movieId = new URLSearchParams(location.search).get("id")  
+
+let url1 = "https://striveschool-api.herokuapp.com/api/movies/"
+let url2 = "https://striveschool-api.herokuapp.com/api/movies/" + movieId
+
+let endpoint = movieId ? url2 : url1
+
+const method = movieId ? "PUT": "POST" 
+
+
+
+// POST MOVIE
+
+function sendMovie(event){
 
 event.preventDefault()
 
@@ -127,8 +146,8 @@ const movie = {
   category: document.getElementById("category").value
 }
 
-fetch("https://striveschool-api.herokuapp.com/api/movies", {
-      method: "POST",
+fetch(endpoint, {
+      method,
       body: JSON.stringify(movie),
       headers: {
       "Content-Type": "application/json",
@@ -147,9 +166,35 @@ function clearForm() {
   document.getElementById("category").value=""
 } 
 
-</script>
+
+// EDIT MOVIE 
+
+if(movieId) document.querySelector("h2").innerText="Edit Movie"                // Change Title
+if(movieId) document.querySelector("#submit").innerText="Update"               // Change Button
+if(movieId) document.querySelector(".btn-danger").classList.remove("d-none")   // Show Delete Button
 
 
 
+// DELETE MOVIE
+
+async function deleteMovie() {
+    try{
+     await fetch(url2, {
+            method: "DELETE",
+            headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTRiMzUyNjRiYjUzZDAwMTViMWEwMzQiLCJpYXQiOjE2MzIzMTg3NTgsImV4cCI6MTYzMzUyODM1OH0.-KaV6cAY0zF2Bo26q8xvwA0xYrtkSTfOKp8E2Ia43Hs"
+    } 
+     })
+     // if(!response.ok) throw new Error ("Failed to delete")
+        alert ("deleted successfully")
+
+  } catch (error){
+    alert(error.message)
+  }
+
+}
+
+    </script>
   </body>
 </html>

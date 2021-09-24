@@ -18,12 +18,13 @@ let myInit = {
     .then(result => {
       
       let row = document.getElementById("SciFi")
+      row.innerHTML = ""
           result.forEach(movie => {
             console.log(movie)
-
+            
             row.innerHTML += `
             <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-2 px-1">
-            <img class="picture rounded" src="${movie.imageUrl}" alt="${movie.name}">
+            <a href="./backoffice.html?id=${movie._id}"><img class="picture rounded" src="${movie.imageUrl}" alt="${movie.name}"></a>
           </div> 
             `
           }
@@ -40,12 +41,13 @@ let myInit = {
     .then(result => {
       
       let row = document.getElementById("action")
+      row.innerHTML = ""
           result.forEach(movie => {
             console.log(movie)
 
             row.innerHTML += `
             <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-2 px-1">
-            <img class="picture rounded" src="${movie.imageUrl}" alt="${movie.name}">
+            <a href="./backoffice.html?id=${movie._id}"><img class="picture rounded" src="${movie.imageUrl}" alt="${movie.name}"></a>
           </div> 
             `
           });})
@@ -60,12 +62,13 @@ let myInit = {
     .then(result => {
       
       let row = document.getElementById("horror")
+      row.innerHTML = ""
           result.forEach(movie => {
             console.log(movie)
 
             row.innerHTML += `
             <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-2 px-1">
-            <img class="picture rounded" src="${movie.imageUrl}" alt="${movie.name}">
+            <a href="./backoffice.html?id=${movie._id}"><img class="picture rounded" src="${movie.imageUrl}" alt="${movie.name}"></a>
           </div> 
             `
           });})
@@ -78,5 +81,5 @@ let myInit = {
 window.onload = () => {
     showAction()
     showHorror()
-  showSciFi()
+    showSciFi()
 }

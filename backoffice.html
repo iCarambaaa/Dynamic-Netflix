@@ -11,6 +11,8 @@
 	<!-- <link rel="stylesheet" href="style.css"> -->
 
     <title>Back Office</title>
+
+
   </head>
   <body>
  
@@ -127,7 +129,7 @@ const movieId = new URLSearchParams(location.search).get("id")
 let url1 = "https://striveschool-api.herokuapp.com/api/movies/"
 let url2 = "https://striveschool-api.herokuapp.com/api/movies/" + movieId
 
-let endpoint = movieId ? url2 : url1
+const endpoint = movieId ? url2 : url1
 
 const method = movieId ? "PUT": "POST" 
 
@@ -154,6 +156,7 @@ fetch(endpoint, {
       "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTRiMzUyNjRiYjUzZDAwMTViMWEwMzQiLCJpYXQiOjE2MzIzMTg3NTgsImV4cCI6MTYzMzUyODM1OH0.-KaV6cAY0zF2Bo26q8xvwA0xYrtkSTfOKp8E2Ia43Hs"
     }
 })  
+.then(clearForm())
 .catch(error => console.log('error', error))
 
   }
